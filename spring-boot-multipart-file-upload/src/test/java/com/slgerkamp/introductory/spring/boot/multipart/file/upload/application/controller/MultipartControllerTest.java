@@ -43,6 +43,7 @@ public class MultipartControllerTest {
 		// HTTPボディにMessageIdがあることを確認
 		given()
 					.multiPart("name", "controlName1")
+					.multiPart("mail", "controlName1@mail.com")
 					.when().post("/file")
 					.then()
 					.statusCode(HttpStatus.CREATED.value());

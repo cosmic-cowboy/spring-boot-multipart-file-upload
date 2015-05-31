@@ -6,4 +6,7 @@ import lombok.Data;
 public class AccountForm {
 
 	public String name;
+
+	public String mail;
+
 }
