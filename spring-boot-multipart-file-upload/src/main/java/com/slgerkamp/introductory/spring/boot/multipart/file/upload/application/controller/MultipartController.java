@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.slgerkamp.introductory.spring.boot.multipart.file.upload.application.controller.form.AccountForm;
+import com.slgerkamp.introductory.spring.boot.multipart.file.upload.application.controller.form.AccountFormList;
 
 /**
- * 複数の
+ * Multipart形式で送られてくるファイルを含む複数のアカウント情報を取得するAPIです。
  *
  */
 @RestController
@@ -27,10 +27,15 @@ public class MultipartController {
 
 	@RequestMapping(method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.CREATED)
-	public Map<String, Object> multipart(@ModelAttribute AccountForm form){
+	public Map<String, Object> multipart(@ModelAttribute AccountFormList list){
 		
-		logger.info("name:" + form.name);
-		logger.info("mail:" + form.mail);
+		list.list.stream().forEach(form -> {
+			logger.info("name:" + form.name);
+			logger.info("mail:" + form.mail);	
+			if(form.file != null){
+				logger.info("file:" + form.file.getOriginalFilename());	
+			}
+		});
 		Map<String, Object> map = new HashMap<>();
 		map.put("status", "ok");
 		return map;
